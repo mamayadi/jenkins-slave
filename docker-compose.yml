@@ -1,0 +1,27 @@
+version: "3.0"
+
+services:
+  tomcat:
+    container_name: tomcat
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    volumes:
+      - "./workspace:/home/jenkins/workspace"
+      - "./ssh:/home/jenkins/.ssh"
+      - "./webapps:/usr/local/tomcat/webapps"
+    ports:
+      - "8888:8080"
+      - "2222:22"
+    entrypoint: |
+      bash -c 'cp -a webapps.dist/manager webapps/; exec catalina.sh run'
+    networks:
+      slave:
+        ipv4_address: 172.20.0.3
+
+networks:
+  slave:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
