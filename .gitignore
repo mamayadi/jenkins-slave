@@ -1,3 +1,6 @@
 ssh/*
 webapps/*
 workspace/*
+docker/*
+!docker/config
+!docker/Dockerfile
