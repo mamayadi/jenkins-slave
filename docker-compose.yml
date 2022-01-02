@@ -6,9 +6,9 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./
+    restart: always
     volumes:
-      - "./workspace:/home/jenkins/workspace"
-      - "./ssh:/home/jenkins/.ssh"
+      - "./workspace:/home/jenkins"
       - "./webapps:/usr/local/tomcat/webapps"
     ports:
       - "8888:8080"
@@ -18,6 +18,20 @@ services:
     networks:
       slave:
         ipv4_address: 172.20.0.3
+  dind:
+    container_name: dind
+    build:
+      dockerfile: Dockerfile
+      context: ./docker
+    restart: always
+    privileged: true
+    volumes:
+      - "./docker:/home/docker"
+    ports:
+      - "2223:22"
+    networks:
+      slave:
+        ipv4_address: 172.20.0.4
 
 networks:
   slave:

@@ -5,6 +5,7 @@ ARG USER_HOME_DIR="/home/jenkins"
 ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
 
 RUN apt-get -qq -y update  && apt-get install -y -qq curl \
+    zip \
     openssh-server \
     iproute2 \
     ssh \
